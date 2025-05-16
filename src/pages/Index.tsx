@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { Navigation } from "@/components/navigation";
 import { AboutSection } from "@/components/about-section";
 import { ProjectsSection } from "@/components/projects-section";
-import { BlogSection } from "@/components/blog-section";
 import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
 import { motion } from "framer-motion";
@@ -80,7 +79,6 @@ const Index = () => {
         {/* Other Sections */}
         <AboutSection />
         <ProjectsSection />
-        <BlogSection />
         <ContactSection />
       </main>
       
