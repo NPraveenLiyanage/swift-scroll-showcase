@@ -1,5 +1,8 @@
 
 import { motion } from "framer-motion";
+import { Timeline } from "./timeline";
+import { SkillsVisualization } from "./skills-visualization";
+import { ResumeButton } from "./resume-button";
 
 export function AboutSection() {
   return (
@@ -12,9 +15,9 @@ export function AboutSection() {
         className="animate-fade-in"
       >
         <h2 className="section-title">About Me</h2>
-        <div className="grid md:grid-cols-2 gap-8 items-center">
+        <div className="grid md:grid-cols-2 gap-8 items-start">
           <div>
-            <div className="aspect-square w-full max-w-[300px] mx-auto rounded-full overflow-hidden bg-muted flex items-center justify-center">
+            <div className="aspect-square w-full max-w-[300px] mx-auto rounded-full overflow-hidden bg-muted flex items-center justify-center mb-6 md:mb-0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="100"
@@ -32,6 +35,7 @@ export function AboutSection() {
               </svg>
             </div>
           </div>
+          
           <div>
             <p className="text-lg mb-4">
               Hello! I'm a passionate designer and developer focused on creating
@@ -43,19 +47,15 @@ export function AboutSection() {
               that deliver exceptional user experiences.
             </p>
 
-            <h3 className="font-medium text-lg mb-2">Skills</h3>
-            <div className="flex flex-wrap gap-2 mb-6">
-              {["UX/UI Design", "JavaScript", "React", "Node.js", "Figma", "TypeScript"].map(
-                (skill) => (
-                  <span
-                    key={skill}
-                    className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-sm"
-                  >
-                    {skill}
-                  </span>
-                )
-              )}
+            <div className="flex flex-wrap gap-3 mb-6">
+              <ResumeButton />
             </div>
+
+            <h3 className="font-medium text-lg mb-4">Skills</h3>
+            <SkillsVisualization />
+            
+            <h3 className="font-medium text-lg mt-8 mb-2">Experience & Education</h3>
+            <Timeline />
           </div>
         </div>
       </motion.div>

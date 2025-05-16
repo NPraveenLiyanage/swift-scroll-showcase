@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { ThemeToggle } from "./theme-toggle";
+import { MobileMenu } from "./mobile-menu";
 
 export function Navigation() {
   const [activeSection, setActiveSection] = useState("");
@@ -9,6 +10,7 @@ export function Navigation() {
   const sections = [
     { id: "about", label: "About" },
     { id: "projects", label: "Projects" },
+    { id: "testimonials", label: "Testimonials" },
     { id: "contact", label: "Contact" },
   ];
 
@@ -57,7 +59,7 @@ export function Navigation() {
           Portfolio
         </a>
         
-        <div className="flex items-center">
+        <div className="flex items-center gap-4">
           <nav className="hidden md:block">
             <ul className="flex space-x-8">
               {sections.map((section) => (
@@ -81,25 +83,7 @@ export function Navigation() {
           </nav>
           
           <ThemeToggle />
-          
-          <button className="md:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-6 w-6"
-            >
-              <line x1="4" y1="12" x2="20" y2="12" />
-              <line x1="4" y1="6" x2="20" y2="6" />
-              <line x1="4" y1="18" x2="20" y2="18" />
-            </svg>
-          </button>
+          <MobileMenu activeSection={activeSection} sections={sections} />
         </div>
       </div>
     </header>
