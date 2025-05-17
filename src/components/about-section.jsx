@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { Timeline } from "./timeline";
 import { SkillsVisualization } from "./skills-visualization";
 import { ResumeButton } from "./resume-button";
+import { TechStack } from "./tech-stack";
+import { Achievements } from "./achievements";
 
 export function AboutSection() {
   return (
@@ -53,6 +55,12 @@ export function AboutSection() {
 
             <h3 className="font-medium text-lg mb-4">Skills</h3>
             <SkillsVisualization />
+            
+            <h3 className="font-medium text-lg mt-8 mb-4">My Tech Stack & Tools</h3>
+            <TechStack />
+            
+            <h3 className="font-medium text-lg mt-8 mb-4">Certifications & Awards</h3>
+            <Achievements />
             
             <h3 className="font-medium text-lg mt-8 mb-2">Experience & Education</h3>
             <Timeline />
