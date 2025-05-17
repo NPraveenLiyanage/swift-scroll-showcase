@@ -4,14 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Quote } from "lucide-react";
 
-type Testimonial = {
-  text: string;
-  author: string;
-  role: string;
-  image?: string;
-};
-
-const testimonials: Testimonial[] = [
+const testimonials = [
   {
     text: "Working with this developer was an absolute pleasure. Their attention to detail and creative problem-solving skills made our project a success.",
     author: "Alex Johnson",
