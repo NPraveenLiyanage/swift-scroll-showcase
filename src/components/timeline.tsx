@@ -2,7 +2,14 @@
 import { motion } from "framer-motion";
 import { CalendarDays, Briefcase, GraduationCap } from "lucide-react";
 
-const timelineItems = [
+type TimelineItem = {
+  year: string;
+  title: string;
+  description: string;
+  type: "work" | "education";
+};
+
+const timelineItems: TimelineItem[] = [
   {
     year: "2022 - Present",
     title: "Senior Frontend Developer",
