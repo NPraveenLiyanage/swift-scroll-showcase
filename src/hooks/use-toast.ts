@@ -2,9 +2,7 @@
 import * as React from "react";
 import {
   toast as sonnerToast,
-  type ToastT,
-  type ToastActionElement,
-  type ToastOptions as SonnerToastOptions,
+  type Toast as ToastT,
 } from "sonner";
 
 const TOAST_LIMIT = 5;
@@ -14,7 +12,7 @@ export type ToastProps = Omit<ToastT, "id"> & {
   id?: string;
   title?: React.ReactNode;
   description?: React.ReactNode;
-  action?: ToastActionElement;
+  action?: React.ReactNode;
   variant?: "default" | "destructive";
 };
 
@@ -107,7 +105,7 @@ export const reducer = (state: State, action: Action): State => {
           t.id === toastId || toastId === undefined
             ? {
                 ...t,
-                open: false,
+                visible: false,
               }
             : t
         ),
@@ -158,9 +156,9 @@ function toast({ id, ...props }: Toast) {
     toast: {
       ...props,
       id: toastId,
-      open: true,
-      onOpenChange: (open) => {
-        if (!open) dismiss();
+      visible: true,
+      onOpenChange: (visible) => {
+        if (!visible) dismiss();
       },
     },
   });
