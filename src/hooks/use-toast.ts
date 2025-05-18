@@ -2,18 +2,21 @@
 import * as React from "react";
 import {
   toast as sonnerToast,
-  type ToastProps as SonnerToastProps,
+  type ToasterProps,
 } from "sonner";
 
 const TOAST_LIMIT = 5;
 const TOAST_REMOVE_DELAY = 1000;
 
-export type ToastProps = Omit<SonnerToastProps, "id"> & {
+export type ToastProps = {
   id?: string;
   title?: React.ReactNode;
   description?: React.ReactNode;
   action?: React.ReactNode;
   variant?: "default" | "destructive";
+  onOpenChange?: (open: boolean) => void;
+  open?: boolean;
+  visible?: boolean;
 };
 
 const actionTypes = {
