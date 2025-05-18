@@ -2,13 +2,13 @@
 import * as React from "react";
 import {
   toast as sonnerToast,
-  type Toast as ToastT,
+  type ToastProps as SonnerToastProps,
 } from "sonner";
 
 const TOAST_LIMIT = 5;
 const TOAST_REMOVE_DELAY = 1000;
 
-export type ToastProps = Omit<ToastT, "id"> & {
+export type ToastProps = Omit<SonnerToastProps, "id"> & {
   id?: string;
   title?: React.ReactNode;
   description?: React.ReactNode;
