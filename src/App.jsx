@@ -9,6 +9,7 @@ import { PageTransition } from "./components/page-transition";
 import Index from "./pages/Index";
 import ProjectDetail from "./pages/ProjectDetail";
 import NotFound from "./pages/NotFound";
+import AdminPasswordChange from "./pages/AdminPasswordChange";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,14 @@ const App = () => (
               element={
                 <PageTransition>
                   <ProjectDetail />
+                </PageTransition>
+              }
+            />
+            <Route 
+              path="/admin/password" 
+              element={
+                <PageTransition>
+                  <AdminPasswordChange />
                 </PageTransition>
               }
             />
