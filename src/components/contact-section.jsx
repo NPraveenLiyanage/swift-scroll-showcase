@@ -5,20 +5,43 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 export function ContactSection() {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    setIsSubmitting(true);
+
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const message = form.message.value;
+
+    const { error } = await supabase
+      .from("contact_messages")
+      .insert([{ name, email, message }]);
+
+    setIsSubmitting(false);
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     toast({
       title: "Message sent!",
       description: "Thank you for reaching out. I'll get back to you soon.",
     });
-    
-    // Reset form
-    const form = e.target;
+
     form.reset();
   };
 
@@ -115,29 +138,36 @@ export function ContactSection() {
                   <label htmlFor="name" className="text-sm font-medium mb-1 block">
                     Name
                   </label>
-                  <Input id="name" placeholder="Your name" required />
+                  <Input id="name" name="name" placeholder="Your name" required />
                 </div>
-                
                 <div>
                   <label htmlFor="email" className="text-sm font-medium mb-1 block">
                     Email
                   </label>
-                  <Input id="email" type="email" placeholder="your.email@example.com" required />
+                  <Input id="email" name="email" type="email" placeholder="your.email@example.com" required />
                 </div>
-                
                 <div>
                   <label htmlFor="message" className="text-sm font-medium mb-1 block">
                     Message
                   </label>
                   <Textarea
                     id="message"
+                    name="message"
                     placeholder="How can I help you?"
                     rows={4}
                     required
                   />
                 </div>
-                
-                <Button type="submit" className="w-full">Send Message</Button>
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    "Send Message"
+                  )}
+                </Button>
               </form>
             </CardContent>
           </Card>

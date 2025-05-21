@@ -8,6 +8,7 @@ import { ThemeProvider } from "./components/theme-provider";
 import { PageTransition } from "./components/page-transition";
 import Index from "./pages/Index";
 import ProjectDetail from "./pages/ProjectDetail";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,14 @@ const App = () => (
               element={
                 <PageTransition>
                   <ProjectDetail />
+                </PageTransition>
+              }
+            />
+            <Route 
+              path="/nir54286admin" 
+              element={
+                <PageTransition>
+                  <Admin />
                 </PageTransition>
               }
             />

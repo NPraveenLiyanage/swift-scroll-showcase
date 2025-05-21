@@ -1,45 +1,45 @@
 
 import { motion } from "framer-motion";
 import { Award, Eye } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { supabase } from "@/integrations/supabase/client";
 
-const achievements = [
-  {
-    title: "Certified Web Developer",
-    issuer: "Web Development Institute",
-    date: "2023",
-    details: "Certification in modern web development technologies including React, Node.js, and database management.",
-    image: "/placeholder.svg"
-  },
-  {
-    title: "Frontend Excellence Award",
-    issuer: "React Conference",
-    date: "2022",
-    details: "Recognized for outstanding contributions to frontend development and innovative UI solutions.",
-    image: "/placeholder.svg"
-  },
-  {
-    title: "Best UI/UX Design",
-    issuer: "Design Awards",
-    date: "2021",
-    details: "Awarded for exceptional user interface design and user experience implementation.",
-    image: "/placeholder.svg"
-  }
-];
+// Define a default placeholder image
+const PLACEHOLDER_IMAGE = "/placeholder.svg";
 
 export function Achievements() {
+  const [achievements, setAchievements] = useState([]);
   const [selectedAchievement, setSelectedAchievement] = useState(null);
-  
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAchievements = async () => {
+      const { data, error } = await supabase
+        .from("certifications") // <-- changed from "achievements" to "certifications"
+        .select("*")
+        .order("date", { ascending: false });
+      if (!error && data) {
+        setAchievements(data);
+      }
+      setLoading(false);
+    };
+    fetchAchievements();
+  }, []);
+
   const openDialog = (achievement) => {
     setSelectedAchievement(achievement);
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="space-y-4">
       {achievements.map((achievement, index) => (
         <motion.div 
-          key={achievement.title}
+          key={achievement.id || achievement.title}
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3, delay: index * 0.1 }}
@@ -73,7 +73,7 @@ export function Achievements() {
               <div className="space-y-4">
                 <div className="rounded-md overflow-hidden">
                   <img 
-                    src={selectedAchievement.image} 
+                    src={selectedAchievement.image_url || PLACEHOLDER_IMAGE} 
                     alt={selectedAchievement.title} 
                     className="w-full h-40 object-cover" 
                   />

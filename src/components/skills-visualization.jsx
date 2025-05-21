@@ -8,7 +8,7 @@ const skills = [
   { name: "React", level: 92 },
   { name: "Node.js", level: 80 },
   { name: "Figma", level: 88 },
-  { name: "TypeScript", level: 82 }
+  { name: "TypeScript", level: 88 }
 ];
 
 export function SkillsVisualization() {

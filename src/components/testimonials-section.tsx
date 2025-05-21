@@ -1,35 +1,41 @@
 
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Quote } from "lucide-react";
 
 type Testimonial = {
+  id: string;
   text: string;
   author: string;
   role: string;
-  image?: string;
+  image_url?: string;
 };
 
-const testimonials: Testimonial[] = [
-  {
-    text: "Working with this developer was an absolute pleasure. Their attention to detail and creative problem-solving skills made our project a success.",
-    author: "Alex Johnson",
-    role: "Product Manager, TechCorp",
-  },
-  {
-    text: "I was impressed by the clean code and innovative solutions. Our website's performance improved significantly after their contribution.",
-    author: "Sarah Williams",
-    role: "CEO, Design Studio",
-  },
-  {
-    text: "Exceptional work and communication throughout the entire process. Delivered exactly what we needed on time and on budget.",
-    author: "Michael Chen",
-    role: "Tech Lead, Startup Inc",
-  }
-];
-
 export function TestimonialsSection() {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      const { data, error } = await supabase
+        .from("testimonials")
+        .select("*")
+        .order("created_at", { ascending: false });
+      if (!error && data) {
+        setTestimonials(data);
+      }
+      setLoading(false);
+    };
+    fetchTestimonials();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <section id="testimonials" className="container-section">
       <motion.div
@@ -46,7 +52,7 @@ export function TestimonialsSection() {
         <div className="grid md:grid-cols-3 gap-6">
           {testimonials.map((testimonial, index) => (
             <motion.div
-              key={index}
+              key={testimonial.id || index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -60,8 +66,8 @@ export function TestimonialsSection() {
                   <p className="mb-4 italic">{testimonial.text}</p>
                   <div className="flex items-center">
                     <Avatar className="h-10 w-10 mr-3">
-                      <AvatarImage src={testimonial.image} alt={testimonial.author} />
-                      <AvatarFallback>{testimonial.author.charAt(0)}</AvatarFallback>
+                      <AvatarImage src={testimonial.image_url} alt={testimonial.author} />
+                      <AvatarFallback>{testimonial.author?.charAt(0)}</AvatarFallback>
                     </Avatar>
                     <div>
                       <div className="font-medium">{testimonial.author}</div>
