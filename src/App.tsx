@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import ProjectDetail from "./pages/ProjectDetail";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
+import AdminPasswordChange from "./pages/AdminPasswordChange";
 
 const queryClient = new QueryClient();
 
@@ -38,10 +39,12 @@ const App = () => (
               }
             />
             <Route 
+
               path="/nir54286admin" 
               element={
                 <PageTransition>
                   <Admin />
+
                 </PageTransition>
               }
             />
